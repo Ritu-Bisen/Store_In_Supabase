@@ -333,8 +333,8 @@ useEffect(() => {
            await postToSheet(
             storeInSheet
                 .filter((s) => s.lift_number === selectedItem?.liftNumber)
-                .map((prev) => ({
-                    // rowIndex: prev.rowIndex,  // ✅ Only send rowIndex to identify the row
+                .map((_item) => ({
+                    //  rowIndex: prev.rowIndex,  // ✅ Only send rowIndex to identify the row
                     actual8: currentDateTime,
                     statusPurchaser: values.statusPurchaser,
                 })),

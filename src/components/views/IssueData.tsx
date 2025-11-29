@@ -264,10 +264,10 @@ export default () => {
             const { error } = await supabase
                 .from('issue')
                 .update({
-                    actual1:new Date().toLocaleString("en-CA", { 
-      timeZone: "Asia/Kolkata", 
-      hour12: false 
-    }).replace(',', ''),
+                    actual1: new Date().toLocaleString("en-CA", { 
+                        timeZone: "Asia/Kolkata", 
+                        hour12: false 
+                    }).replace(',', ''),
                     status: values.status,
                     given_qty: values.status === 'Yes' ? values.givenQty : 0,
                 })
@@ -287,9 +287,9 @@ export default () => {
         }
     }
 
-    function onError(e: FieldErrors<z.infer<typeof schema>>) {
-        toast.error('Please fill all required fields');
-    }
+   function onError(_errors: FieldErrors<z.infer<typeof schema>>) { // ✅ FIXED: Prefix with underscore
+    toast.error('Please fill all required fields');
+}
 
     return (
         <div>
@@ -299,7 +299,7 @@ export default () => {
                         <ClipboardCheck size={50} className="text-primary" />
                     </Heading>
                     
-                    {/* Add TabsList for navigation
+                    {/* Add TabsList for navigation */}
                     <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger value="pending">
                             Pending Issues ({tableData.length})
@@ -307,46 +307,46 @@ export default () => {
                         <TabsTrigger value="history">
                             Issue History ({historyData.length})
                         </TabsTrigger>
-                    </TabsList> */}
+                    </TabsList>
 
-                  <TabsContent value="pending">
-  {issueLoading ? (
-    <div className="flex justify-center items-center p-8">
-      <Loader size={30} color="#3B82F6" />
-      <span className="ml-2">Loading issue data from Supabase...</span>
-    </div>
-  ) : (
-    <div> {/* Add this wrapper div */}
-      <DataTable
-        data={tableData}
-        columns={columns}
-        searchFields={['productName', 'department', 'issueNo', 'issueTo']}
-        dataLoading={issueLoading}
-        extraActions={
-          <Button
-            variant="default"
-            onClick={onDownloadClick}
-            disabled={tableData.length === 0 || loading}
-            style={{
-              background: 'linear-gradient(90deg, #4CAF50, #2E7D32)',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '0 16px',
-              fontWeight: 'bold',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-            }}
-          >
-            <DownloadOutlined />
-            {loading ? 'Downloading...' : 'Download CSV'}
-          </Button>
-        }
-      />
-    </div>
-  )}
-</TabsContent>
+                    <TabsContent value="pending">
+                        {issueLoading ? (
+                            <div className="flex justify-center items-center p-8">
+                                <Loader size={30} color="#3B82F6" />
+                                <span className="ml-2">Loading issue data from Supabase...</span>
+                            </div>
+                        ) : (
+                            <div>
+                                <DataTable
+                                    data={tableData}
+                                    columns={columns}
+                                    searchFields={['productName', 'department', 'issueNo', 'issueTo']}
+                                    dataLoading={issueLoading}
+                                    extraActions={
+                                        <Button
+                                            variant="default"
+                                            onClick={onDownloadClick}
+                                            disabled={tableData.length === 0 || loading}
+                                            style={{
+                                                background: 'linear-gradient(90deg, #4CAF50, #2E7D32)',
+                                                border: 'none',
+                                                borderRadius: '8px',
+                                                padding: '0 16px',
+                                                fontWeight: 'bold',
+                                                boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px',
+                                            }}
+                                        >
+                                            <DownloadOutlined />
+                                            {loading ? 'Downloading...' : 'Download CSV'}
+                                        </Button>
+                                    }
+                                />
+                            </div>
+                        )}
+                    </TabsContent>
                     
                     <TabsContent value="history">
                         {issueLoading ? (
