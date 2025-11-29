@@ -300,14 +300,14 @@ export default () => {
                     </Heading>
                     
                     {/* Add TabsList for navigation */}
-                    <TabsList className="grid w-full grid-cols-2">
+                    {/* <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger value="pending">
                             Pending Issues ({tableData.length})
                         </TabsTrigger>
                         <TabsTrigger value="history">
                             Issue History ({historyData.length})
                         </TabsTrigger>
-                    </TabsList>
+                    </TabsList> */}
 
                     <TabsContent value="pending">
                         {issueLoading ? (
