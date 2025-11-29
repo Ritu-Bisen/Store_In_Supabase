@@ -34,20 +34,20 @@ export function analyzeData(
     // Map from indentNumber to productName
     const indentProductMap = new Map<string, string>();
     for (const indent of indentSheet) {
-        indentProductMap.set(indent.indentNumber, indent.productName);
+        indentProductMap.set(indent.indent_number, indent.product_name);
     }
 
     // -------------------------------
     // Approved Indents
     const approvedIndents = indentSheet.filter(
         (i) =>
-            ["three party", "regular"].includes(i.vendorType?.toLowerCase() || "") &&
+            ["three party", "regular"].includes(i.vendor_type?.toLowerCase() || "") &&
             isWithinDate(i.timestamp) &&
-            isProductMatch(i.productName)
+            isProductMatch(i.product_name)
     );
 
     const totalApprovedQuantity = approvedIndents.reduce(
-        (sum, i) => sum + (i.approvedQuantity ?? 0),
+        (sum, i) => sum + (i.approved_quantity ?? 0),
         0
     );
 
@@ -71,13 +71,13 @@ export function analyzeData(
     // Issued Items
     const issuedIndents = indentSheet.filter(
         (i) =>
-            i.issueStatus?.toLowerCase() === 'issued' &&
+            i.status?.toLowerCase() === 'issued' &&
             isWithinDate(i.timestamp) &&
-            isProductMatch(i.productName)
+            isProductMatch(i.product_name)
     );
 
     const totalIssuedQuantity = issuedIndents.reduce(
-        (sum, i) => sum + (i.issuedQuantity ?? 0),
+        (sum, i) => sum + (i.issued_quantity ?? 0),
         0
     );
 

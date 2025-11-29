@@ -155,25 +155,25 @@ export default function POHistory() {
                 );
             },
         },
-        { 
-            accessorKey: 'status', 
-            header: 'Status',
-            cell: ({ row }) => {
-                const status = row.original.status;
-                const variantMap = {
-                    'Not Received': 'secondary',
-                    'Received': 'primary',
-                    'Revised': 'warning',
-                    'Unknown': 'default'
-                } as const;
-                
-                return (
-                    <Pill variant={variantMap[status] || 'default'}>
-                        {status}
-                    </Pill>
-                );
-            }
-        },
+     { 
+    accessorKey: 'status', 
+    header: 'Status',
+    cell: ({ row }) => {
+        const status = row.original.status;
+        const variantMap = {
+            'Not Received': 'secondary',
+            'Received': 'primary',
+            'Revised': 'pending', // Changed from 'warning' to 'pending'
+            'Unknown': 'default'
+        } as const;
+        
+        return (
+            <Pill variant={variantMap[status] || 'default'}>
+                {status}
+            </Pill>
+        );
+    }
+},
     ], []);
 
     // Loading state
@@ -191,21 +191,21 @@ export default function POHistory() {
     }
 
     return (
-        <div className="space-y-6">
-            <Heading 
-                heading="PO History" 
-                subtext="View purchase orders from database"
-                action={
-                    <button 
-                        onClick={handleRefresh}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                        Refresh Data
-                    </button>
-                }
-            >
-                <Package2 size={50} className="text-primary" />
-            </Heading>
+      <div className="space-y-6">
+  <div className="flex justify-between items-center">
+    <Heading 
+      heading="PO History" 
+      subtext="View purchase orders from database"
+    >
+      <Package2 size={50} className="text-primary" />
+    </Heading>
+    <button 
+      onClick={handleRefresh}
+      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+    >
+      Refresh Data
+    </button>
+  </div>
 
             {error && (
                 <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
@@ -239,7 +239,7 @@ export default function POHistory() {
                     searchFields={['vendorName', 'poNumber', 'preparedBy', 'approvedBy']}
                     dataLoading={poMasterLoading}
                     className='h-[80dvh]'
-                    searchPlaceholder="Search by vendor, PO number, or person..."
+                    // searchPlaceholder="Search by vendor, PO number, or person..."
                 />
             )}
         </div>

@@ -224,7 +224,7 @@ const ExchangeMaterials = () => {
 useEffect(() => {
     // Pehle firm name se filter karo (case-insensitive)
     const filteredByFirm = storeInSheet.filter(item => 
-        user.firmNameMatch.toLowerCase() === "all" || item.firmNameMatch === user.firmNameMatch
+        user.firm_name_match.toLowerCase() === "all" || item.firm_name_match === user.firm_name_match
     );
     
     setPendingData(
@@ -235,35 +235,35 @@ useEffect(() => {
             )
             .map((i) => ({
                 timestamp: i.timestamp || '',
-                liftNumber: i.liftNumber || '',
-                indentNo: i.indentNo || '',
-                poNumber: i.poNumber || '',
-                vendorName: i.vendorName || '',
-                productName: i.productName || '',
-                billStatus: i.billStatus || '',
-                billNo: i.billNo || '',
+                liftNumber: i.lift_number || '',
+                indentNo: i.indent_no || '',
+                poNumber: i.po_number || '',
+                vendorName: i.vendor_name || '',
+                productName: i.product_name || '',
+                billStatus: i.bill_status || '',
+                billNo: i.bill_no || '',
                 qty: i.qty || 0,
-                leadTimeToLiftMaterial: (i.leadTimeToLiftMaterial || '') as string | number,
-                typeOfBill: i.typeOfBill || '',
-                billAmount: i.billAmount || 0,
-                discountAmount: i.discountAmount || 0,
-                paymentType: i.paymentType || '',
-                advanceAmountIfAny: i.advanceAmountIfAny || 0,
-                photoOfBill: i.photoOfBill || '',
-                transportationInclude: i.transportationInclude || '',
-                transporterName: i.transporterName || '',
+                leadTimeToLiftMaterial: (i.lead_time_to_lift_material || '') as string | number,
+                typeOfBill: i.type_of_bill || '',
+                billAmount: i.bill_amount || 0,
+                discountAmount: i.discount_amount || 0,
+                paymentType: i.payment_type || '',
+                advanceAmountIfAny: i.advance_amount_if_any || 0,
+                photoOfBill: i.photo_of_bill || '',
+                transportationInclude: i.transportation_include || '',
+                transporterName: i.transporter_name || '',
                 amount: i.amount || 0,
-                receivingStatus: i.receivingStatus || '',
-                receivedQuantity: i.receivedQuantity || 0,
-                photoOfProduct: i.photoOfProduct || '',
+                receivingStatus: i.receiving_status || '',
+                receivedQuantity: i.received_quantity || 0,
+                photoOfProduct: i.photo_of_product || '',
                 warrenty: i.warrenty || '',
-                endDateWarrenty: i.endDateWarrenty || '',
+                endDateWarrenty: i.end_date_warrenty || '',
                 billReceived: i.billReceived || '',
-                billNumber: i.billNumber || '',
+                billNumber: i.bill_no || '',
                 billAmount2: i.billAmount2 || '',
                 billImage: i.billImage || '',
-                damageOrder: i.damageOrder || '',
-                quantityAsPerBill: i.quantityAsPerBill || 0,
+                damageOrder: i.damage_order || '',
+                quantityAsPerBill: i.quantity_as_per_bill || 0,
                 priceAsPerPo: i.priceAsPerPo || 0,
                 remark: i.remark || '',
                 status: i.status || '',
@@ -274,12 +274,12 @@ useEffect(() => {
                 actual10: i.actual10 || '',
             } as ExchangePendingData))
     );
-}, [storeInSheet, user.firmNameMatch]);
+}, [storeInSheet, user.firm_name_match]);
 
 useEffect(() => {
     // Pehle firm name se filter karo (case-insensitive)
     const filteredByFirm = storeInSheet.filter(item => 
-        user.firmNameMatch.toLowerCase() === "all" || item.firmNameMatch === user.firmNameMatch
+        user.firm_name_match.toLowerCase() === "all" || item.firm_name_match === user.firm_name_match
     );
     
     setHistoryData(
@@ -289,36 +289,36 @@ useEffect(() => {
             )
             .map((i) => ({
                 timestamp: i.timestamp || '',
-                liftNumber: i.liftNumber || '',
-                indentNo: i.indentNo || '',
+                liftNumber: i.lift_number || '',
+                indentNo: i.indent_no || '',
                 poNumber: i.poNumber || '',
-                vendorName: i.vendorName || '',
-                productName: i.productName || '',
-                firmNameMatch: i.firmNameMatch || '',
-                billStatus: i.billStatus || '',
-                billNo: i.billNo || '',
+                vendorName: i.vendor_name || '',
+                productName: i.product_name || '',
+                firmNameMatch: i.firm_name_match || '',
+                billStatus: i.bill_status || '',
+                billNo: i.bill_no || '',
                 qty: i.qty || 0,
-                leadTimeToLiftMaterial: (i.leadTimeToLiftMaterial || '') as string | number,
-                typeOfBill: i.typeOfBill || '',
-                billAmount: i.billAmount || 0,
-                discountAmount: i.discountAmount || 0,
-                paymentType: i.paymentType || '',
-                advanceAmountIfAny: i.advanceAmountIfAny || 0,
-                photoOfBill: i.photoOfBill || '',
-                transportationInclude: i.transportationInclude || '',
-                transporterName: i.transporterName || '',
+                leadTimeToLiftMaterial: (i.lead_time_to_lift_material || '') as string | number,
+                typeOfBill: i.type_of_bill || '',
+                billAmount: i.bill_amount || 0,
+                discountAmount: i.discount_amount || 0,
+                paymentType: i.payment_type || '',
+                advanceAmountIfAny: i.advance_amount_if_any || 0,
+                photoOfBill: i.photo_of_bill || '',
+                transportationInclude: i.transportation_include || '',
+                transporterName: i.transporter_name || '',
                 amount: i.amount || 0,
-                receivingStatus: i.receivingStatus || '',
-                receivedQuantity: i.receivedQuantity || 0,
-                photoOfProduct: i.photoOfProduct || '',
+                receivingStatus: i.receiving_status || '',
+                receivedQuantity: i.received_quantity || 0,
+                photoOfProduct: i.photo_of_product || '',
                 warrenty: i.warrenty || '',
-                endDateWarrenty: i.endDateWarrenty || '',
+                endDateWarrenty: i.end_date_warrenty || '',
                 billReceived: i.billReceived || '',
-                billNumber: i.billNumber || '',
+                billNumber: i.bill_no || '',
                 billAmount2: i.billAmount2 || '',
                 billImage: i.billImage || '',
-                damageOrder: i.damageOrder || '',
-                quantityAsPerBill: i.quantityAsPerBill || 0,
+                damageOrder: i.damage_order || '',
+                quantityAsPerBill: i.quantity_as_per_bill || 0,
                 priceAsPerPo: i.priceAsPerPo || 0,
                 remark: i.remark || '',
                 status: i.status || '',
@@ -329,15 +329,15 @@ useEffect(() => {
                 actual10: i.actual10 || '',
             } as ExchangeHistoryData))
     );
-}, [storeInSheet, user.firmNameMatch]);
+}, [storeInSheet, user.firm_name_match]);
 
 useEffect(() => {
     console.log('StoreInSheet data:', storeInSheet);
-    console.log('Exchange items:', storeInSheet.filter(i => i.typeOfBill === 'Exchange'));
+    console.log('Exchange items:', storeInSheet.filter(i => i.type_of_bill === 'Exchange'));
 }, [storeInSheet]);
 
     const pendingColumns: ColumnDef<ExchangePendingData>[] = [
-        ...(user.receiveItemView
+        ...(user.receive_item_view
             ? [
                   {
                       header: 'Action',
@@ -560,9 +560,9 @@ async function onSubmit(values: z.infer<typeof schema>) {
 
         await postToSheet(
             storeInSheet
-                .filter((s) => s.liftNumber === selectedItem?.liftNumber)
+                .filter((s) => s.lift_number === selectedItem?.liftNumber)
                 .map((prev) => ({
-                    rowIndex: prev.rowIndex,  // To identify the row
+                    // rowIndex: prev.rowIndex,  // To identify the row
                     actual10: currentDateTime, // Timestamp
                     status: values.status,     // Status (Yes/No)
                 })),

@@ -260,6 +260,7 @@ async function updateMasterSheet() {
 
         const transformedData: MasterSheet = {
             items: masterData,
+            
             vendorNames: getUniqueValues(masterData, 'vendor_name'),
             paymentTerms: getUniqueValues(masterData, 'payment_term'), // Using payment_term (singular)
             departments: getUniqueValues(masterData, 'department'),

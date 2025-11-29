@@ -76,9 +76,9 @@ export type IndentSheet = {
     total_qty: number;
     received_qty: number;
     // receive_status: string;
-    // planned6: string;
-    // actual6: string;
-    // time_delay6: string;
+    planned6: string;
+    actual6: string;
+    time_delay6: string;
     approved_by: string;
     approval_date: string;
     issued_quantity: number;
@@ -236,12 +236,11 @@ export type Vendor = {
     email: string;
 };
 
-
 // Update your type to match the actual database structure
 export type MasterSheetItem = {
     id: number;
     vendor_name: string;
-    payment_term: string; // Changed from payment_terms
+    payment_term: string;
     department: string;
     vendor_gstin: string;
     vendor_address: string;
@@ -255,18 +254,19 @@ export type MasterSheetItem = {
     destination_address: string;
     uom: string;
     firm_name: string;
-    group_head: string; // Added this field
-    item_name: string; // Added this field (product name)
-    default_terms: string; // Added this field
-    company_email: string; // Added this field
-    person_name: string; // Added this field
-    where: string; // Added this field
-    fms_name: string; // Added this field
+    group_head: string;
+    item_name: string;
+    default_terms: string;
+    company_email: string;
+    person_name: string;
+    where: string;
+    fms_name: string;
 };
 
 // If you need the aggregated structure, keep both types
 export type MasterSheet = {
     items: MasterSheetItem[];
+    // vendors: Vendor[]; // ✅ FIXED: Changed from string[] to Vendor[]
     vendorNames: string[];
     paymentTerms: string[];
     departments: string[];
@@ -283,7 +283,11 @@ export type MasterSheet = {
     firmsnames: string[];
     firms: string[];
     fmsNames: string[];
-    firmCompanyMap: Record<string, { companyName: string; companyAddress: string; destinationAddress: string; }>;
+    firmCompanyMap: Record<string, { 
+        companyName: string; 
+        companyAddress: string; 
+        destinationAddress: string; 
+    }>;
 };
 
 // export type MasterSheet = {

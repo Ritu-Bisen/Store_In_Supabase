@@ -127,65 +127,65 @@ export default () => {
 useEffect(() => {
     // Pehle firm name se filter karo (case-insensitive)
     const filteredByFirm = storeInSheet.filter(item => 
-        user.firmNameMatch.toLowerCase() === "all" || item.firmNameMatch === user.firmNameMatch
+        user.firm_name_match.toLowerCase() === "all" || item.firm_name_match === user.firm_name_match
     );
     
     setPendingData(
         filteredByFirm
             .filter((i) => i.planned8 !== '' && i.actual8 === '')
             .map((i) => ({
-                liftNumber: i.liftNumber || '',
-                indentNumber: i.indentNo || '',
-                billNo: i.billNo || '',
-                vendorName: i.vendorName || '',
-                productName: i.productName || '',
+                liftNumber: i.lift_number || '',
+                indentNumber: i.indent_no || '',
+                billNo: i.bill_no || '',
+                vendorName: i.vendor_name || '',
+                productName: i.product_name || '',
                 qty: i.qty || 0,
-                typeOfBill: i.typeOfBill || '',
-                billAmount: i.billAmount || 0,
-                paymentType: i.paymentType || '',
-                advanceAmountIfAny: Number(i.advanceAmountIfAny) || 0,
-                photoOfBill: i.photoOfBill || '',
-                transportationInclude: i.transportationInclude || '',
-                transporterName: i.transporterName || '',
+                typeOfBill: i.type_of_bill || '',
+                billAmount: i.bill_amount || 0,
+                paymentType: i.payment_type || '',
+                advanceAmountIfAny: Number(i.advance_amount_if_any) || 0,
+                photoOfBill: i.photo_of_bill || '',
+                transportationInclude: i.transportation_include || '',
+                transporterName: i.transporter_name || '',
                 amount: i.amount || 0,
-                firmNameMatch: i.firmNameMatch || '',
+                firmNameMatch: i.firm_name_match || '',
             }))
     );
-}, [storeInSheet, user.firmNameMatch]);
+}, [storeInSheet, user.firm_name_match]);
 
 useEffect(() => {
     // Pehle firm name se filter karo (case-insensitive)
     const filteredByFirm = storeInSheet.filter(item => 
-        user.firmNameMatch.toLowerCase() === "all" || item.firmNameMatch === user.firmNameMatch
+        user.firm_name_match.toLowerCase() === "all" || item.firm_name_match === user.firm_name_match
     );
     
     setHistoryData(
         filteredByFirm
             .filter((i) => i.planned8 !== '' && i.actual8 !== '')
             .map((i) => ({
-                liftNumber: i.liftNumber || '',
-                indentNumber: i.indentNo || '',
-                billNo: i.billNo || '',
-                vendorName: i.vendorName || '',
-                productName: i.productName || '',
+                liftNumber: i.lift_number || '',
+                indentNumber: i.indent_no || '',
+                billNo: i.bill_no || '',
+                vendorName: i.vendor_name || '',
+                productName: i.product_name || '',
                 qty: i.qty || 0,
-                typeOfBill: i.typeOfBill || '',
-                billAmount: i.billAmount || 0,
-                paymentType: i.paymentType || '',
-                advanceAmountIfAny: Number(i.advanceAmountIfAny) || 0,
-                photoOfBill: i.photoOfBill || '',
-                transportationInclude: i.transportationInclude || '',
+                typeOfBill: i.type_of_bill || '',
+                billAmount: i.bill_amount || 0,
+                paymentType: i.payment_type || '',
+                advanceAmountIfAny: Number(i.advance_amount_if_any) || 0,
+                photoOfBill: i.photo_of_bill || '',
+                transportationInclude: i.transportation_include || '',
                 status: i.status || '',
                 reason: i.reason || '',
-                billNumber: i.billNo || '',
+                billNumber: i.bill_no || '',
                 statusPurchaser: i.statusPurchaser || '',
-                firmNameMatch: i.firmNameMatch || '',
+                firmNameMatch: i.firm_name_match || '',
             }))
     );
-}, [storeInSheet, user.firmNameMatch]);
+}, [storeInSheet, user.firm_name_match]);
 
     const pendingColumns: ColumnDef<StoreInPendingData>[] = [
-        ...(user.receiveItemView
+        ...(user.receive_item_view
             ? [
                   {
                       header: 'Action',
@@ -332,9 +332,9 @@ useEffect(() => {
 
            await postToSheet(
             storeInSheet
-                .filter((s) => s.liftNumber === selectedItem?.liftNumber)
+                .filter((s) => s.lift_number === selectedItem?.liftNumber)
                 .map((prev) => ({
-                    rowIndex: prev.rowIndex,  // ✅ Only send rowIndex to identify the row
+                    // rowIndex: prev.rowIndex,  // ✅ Only send rowIndex to identify the row
                     actual8: currentDateTime,
                     statusPurchaser: values.statusPurchaser,
                 })),

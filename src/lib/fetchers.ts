@@ -1,6 +1,6 @@
 import supabase from '@/SupabaseClient';
 import type { IndentSheet, MasterSheet, ReceivedSheet, Sheet, StoreInSheet } from '@/types';
-import type { InventorySheet, IssueSheet, PoMasterSheet, TallyEntrySheet, UserPermissions, Vendor, PcReportSheet } from '@/types/sheets';
+import type { InventorySheet, IssueSheet, PoMasterSheet, TallyEntrySheet, UserPermissions, Vendor, PcReportSheet, MasterSheetItem } from '@/types/sheets';
 
 // Add PaymentHistoryData interface
 export interface PaymentHistoryData {
@@ -170,13 +170,13 @@ export async function fetchSheet(
 
         // ✅ Vendors processing
         let vendors: Vendor[] = [];
-        
+
         if (data.vendors && Array.isArray(data.vendors)) {
             vendors = data.vendors.map((v: any) => ({
                 vendorName: v.vendorName || '',
                 address: v.address || '',
                 gstin: v.gstin || '',
-                vendorEmail: v.email || v.vendorEmail || ''
+                email: v.email || v.vendorEmail || '' // Changed from vendorEmail to email
             }));
             console.log("✅ Using vendors array from backend:", vendors.length);
         } else {
@@ -191,7 +191,6 @@ export async function fetchSheet(
                         gstin: data.vendorGstin?.[i] || '',
                         address: data.vendorAddress?.[i] || '',
                         email: data.vendorEmail?.[i] || ''
-                        
                     });
                 }
             }
@@ -210,6 +209,9 @@ export async function fetchSheet(
         const firms = new Set<string>();
         const fmsNames = new Set<string>();
         const firmCompanyMap: Record<string, { companyName: string; companyAddress: string; destinationAddress: string }> = {};
+
+        // ✅ CREATE MASTER DATA ARRAY
+        const masterData: MasterSheetItem[] = [];
 
         for (let i = 0; i < length; i++) {
             if (data.department && data.department[i] && data.department[i].toString().trim()) {
@@ -247,7 +249,36 @@ export async function fetchSheet(
                     destinationAddress: (destinationAddress || companyAddress).toString().trim()
                 };
             }
+
+            // ✅ BUILD MASTER DATA ITEMS
+            masterData.push({
+                id: i,
+                vendor_name: data.vendorName?.[i] || '',
+                payment_term: data.paymentTerm?.[i] || '',
+                department: data.department?.[i] || '',
+                vendor_gstin: data.vendorGstin?.[i] || '',
+                vendor_address: data.vendorAddress?.[i] || '',
+                vendor_email: data.vendorEmail?.[i] || '',
+                company_name: data.companyName?.[i] || '',
+                company_address: data.companyAddress?.[i] || '',
+                company_gstin: data.companyGstin?.[i] || '',
+                company_phone: data.companyPhone?.[i] || '',
+                billing_address: data.billingAddress?.[i] || '',
+                company_pan: data.companyPan?.[i] || '',
+                destination_address: data.destinationAddress?.[i] || '',
+                uom: data.uom?.[i] || '',
+                firm_name: data.firmName?.[i] || '',
+                group_head: data.groupHead?.[i] || '',
+                item_name: data.itemName?.[i] || '',
+                default_terms: data.defaultTerms?.[i] || data.defaultTerm?.[i] || '',
+                company_email: data.companyEmail?.[i] || '',
+                person_name: data.personName?.[i] || '',
+                where: data.where?.[i] || '',
+                fms_name: data.fmsName?.[i] || '',
+            });
         }
+
+        console.log("📦 FINAL - Master data items:", masterData.length);
 
         // ✅ Process ALL dropdown arrays with proper fallbacks
         let finalDepartments: string[] = [];
@@ -360,11 +391,12 @@ export async function fetchSheet(
             defaultTerms: finalDefaultTerms.length,  // ✅ ADD THIS
             uoms: finalUoms.length,
             firms: finalFirms.length,
-            groupHeads: Object.keys(groupHeads).length
+            groupHeads: Object.keys(groupHeads).length,
+            masterDataItems: masterData.length
         });
 
         return {
-            vendors: vendors,
+            items: masterData, // ✅ ADDED: This was missing
             vendorNames: vendors.map(v => v.vendorName),
             departments: finalDepartments,
             paymentTerms: finalPaymentTerms,
@@ -376,7 +408,7 @@ export async function fetchSheet(
             companyGstin: data.companyGstin?.[0] || '',
             billingAddress: data.billingAddress?.[0] || '',
             destinationAddress: data.destinationAddress?.[0] || '',
-            defaultTerms: finalDefaultTerms,  // ✅ CHANGED: Use finalDefaultTerms instead of [...defaultTerms]
+            defaultTerms: finalDefaultTerms,
             uoms: finalUoms,
             firms: finalFirms,
             fmsNames: [...fmsNames],
@@ -384,7 +416,6 @@ export async function fetchSheet(
             firmsnames: data.firmsnames ?? [],
         };
     }
-
     return raw.rows.filter((r: IndentSheet) => r.timestamp !== '');
 }
 
@@ -471,7 +502,6 @@ export const postToIssueSheet = async (
 
     return res;
 };
-
 
 export const insertIssueRows = async (rows: Partial<IssueSheet>[]) => {
     const { data, error } = await supabase

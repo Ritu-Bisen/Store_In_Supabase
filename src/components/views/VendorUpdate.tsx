@@ -1200,11 +1200,11 @@ export default () => {
                                                                 });
                                                             }}
                                                         />
-                                                        {options?.vendors?.map(({ vendorName }, i) => (
+                                                        {/* {options?.vendor?.map(({ vendor_name }, i) => (
                                                             <SelectItem key={i} value={vendorName}>
                                                                 {vendorName}
                                                             </SelectItem>
-                                                        ))}
+                                                        ))} */}
                                                     </SelectContent>
                                                 </Select>
                                             </FormItem>

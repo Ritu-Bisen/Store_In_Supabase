@@ -117,7 +117,7 @@ export default () => {
 useEffect(() => {
     // Pehle firm name se filter karo (case-insensitive)
     const filteredByFirm = indentSheet.filter(item => 
-        user.firmNameMatch.toLowerCase() === "all" || item.firmNameMatch === user.firmNameMatch
+        user.firm_name_match.toLowerCase() === "all" || item.firm_name_match === user.firm_name_match
     );
     
     setTableData(
@@ -126,15 +126,15 @@ useEffect(() => {
                 (sheet) =>
                     sheet.planned6 !== '' &&
                     sheet.actual6 === '' &&
-                    sheet.indentType === 'Store Out'
+                    sheet.indent_type === 'Store Out'
             )
             .map((sheet) => ({
-                indentNo: sheet.indentNumber,
-                indenter: sheet.indenterName,
+                indentNo: sheet.indent_number,
+                indenter: sheet.indenter_name,
                 department: sheet.department,
-                product: sheet.productName,
+                product: sheet.product_name,
                 date: formatDate(new Date(sheet.timestamp)),
-                areaOfUse: sheet.areaOfUse,
+                areaOfUse: sheet.area_of_use,
                 quantity: sheet.quantity,
                 uom: sheet.uom,
                 specifications: sheet.specifications || 'Not specified',
@@ -147,27 +147,27 @@ useEffect(() => {
                 (sheet) =>
                     sheet.planned6 !== '' &&
                     sheet.actual6 !== '' &&
-                    sheet.indentType === 'Store Out'
+                    sheet.indent_type === 'Store Out'
             )
             .map((sheet) => ({
                 approvalDate: formatDate(new Date(sheet.actual6)),
-                indentNo: sheet.indentNumber,
-                indenter: sheet.indenterName,
+                indentNo: sheet.indent_number,
+                indenter: sheet.indenter_name,
                 department: sheet.department,
-                product: sheet.productName,
+                product: sheet.product_name,
                 date: formatDate(new Date(sheet.timestamp)),
-                areaOfUse: sheet.areaOfUse,
-                quantity: sheet.issuedQuantity,
+                areaOfUse: sheet.area_of_use,
+                quantity: sheet.issued_quantity,
                 requestedQuantity: sheet.quantity,
                 uom: sheet.uom,
                 issuedStatus: sheet.issuedStatus,
             }))
     );
-}, [indentSheet, user.firmNameMatch]);
+}, [indentSheet, user.firm_name_match]);
 
     // Creating table columns
     const columns: ColumnDef<StoreOutTableData>[] = [
-        ...(user.storeOutApprovalAction
+        ...(user.store_out_approval_action
             ? [
                 {
                     header: 'Actions',
@@ -196,7 +196,7 @@ useEffect(() => {
                                             await postToSheet(
                                                 indentSheet
                                                     .filter(
-                                                        (s) => s.indentNumber === indent.indentNo
+                                                        (s) => s.indent_number === indent.indentNo
                                                     )
                                                     .map((prev) => ({
                                                         ...prev,
@@ -305,14 +305,14 @@ useEffect(() => {
     async function onSubmit(values: z.infer<typeof schema>) {
         try {
             const payload = indentSheet
-                .filter((s) => s.indentNumber === selectedIndent?.indentNo)
+                .filter((s) => s.indent_number === selectedIndent?.indentNo)
                 .map((prev) => {
                     const {
-                        poQty,
-                        pendingPoQty,
+                        po_qty,
+                        pending_po_qty,
                         status,
-                        totalQty,
-                        receivedQty,
+                        total_qty,
+                        received_qty,
                         ...rest // rest contains everything else
                     } = prev;
 
